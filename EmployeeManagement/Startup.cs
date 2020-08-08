@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace EmployeeManagement
 {
@@ -26,7 +27,7 @@ namespace EmployeeManagement
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -35,17 +36,36 @@ namespace EmployeeManagement
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+            app.Use(async (context, next) =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!\n");
-                    await context.Response.WriteAsync(System.Diagnostics.Process.GetCurrentProcess().ProcessName + "\n");
-                    await context.Response.WriteAsync(_config["Mykey"]);
-
-
-                });
+                logger.LogInformation("MW1: Incoming Request");
+                await next();
+                logger.LogInformation("MW1: Outgoing Request");
             });
+
+            app.Use(async (context, next) =>
+            {
+                logger.LogInformation("MW2: Incoming Request");
+                await next();
+                logger.LogInformation("MW2: Outgoing Request");
+            });
+
+            app.Run(async (context) =>
+            {
+                logger.LogInformation("MW_RUN: Incoming Request");
+                await context.Response.WriteAsync("Hello World from RUN Middleware.");
+                logger.LogInformation("MW_RUN: Outgoin Request");
+            });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapGet("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("Hello World!\n");
+            //        await context.Response.WriteAsync(System.Diagnostics.Process.GetCurrentProcess().ProcessName + "\n");
+            //        await context.Response.WriteAsync(_config["Mykey"]);
+            //    });
+            //});
         }
     }
 }

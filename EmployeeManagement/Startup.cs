@@ -35,17 +35,11 @@ namespace EmployeeManagement
 
             app.UseRouting();
 
-
-
-
-            FileServerOptions fileServerOptions = new FileServerOptions();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("default.html");
-            app.UseFileServer(fileServerOptions);
+            app.UseStaticFiles();
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World");
+                await context.Response.WriteAsync("Environment Name: " + env.EnvironmentName);
             });
 
             //app.UseEndpoints(endpoints =>

@@ -24,12 +24,11 @@ namespace EmployeeManagement.Controllers
         {
             Employee model = _employeeRepository.GetEmployee(2);
 
-            ViewData["PageTitle"] = "Details of Employee";
+            ViewBag.PageTitle = "Details of Employee";
 
-            ViewData["EmployeeId"] = model.Id;
-            ViewData["EmployeeName"] = model.Name;
-            ViewData["EmployeeEmail"] = model.Email;
-            ViewData["EmployeeDepartment"] = model.Department;
+            ViewBag.Employee = model;
+
+            ViewBag.EmployeeName = model.Name;
 
             return View(model);
         }

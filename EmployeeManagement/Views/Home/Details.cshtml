@@ -4,7 +4,20 @@
 </head>
 <body>
 
-    <h2>Details.cshtml from Views/Home Folder</h2>
+    <h2>@ViewData["PageTitle"]</h2>
+
+    @{ 
+        var Name = ViewData["EmployeeName"];
+        var Id = ViewData["EmployeeId"];
+    }
+
+    <div>
+        <ul>
+            <li>Name: @Name (ID: @Id)</li>
+            <li>Email: @ViewData["EmployeeEmail"]</li>
+            <li>Department: @ViewData["EmployeeDepartment"]</li>
+        </ul>
+    </div>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿@model EmployeeManagement.Models.Employee
+﻿@model EmployeeManagement.ViewModels.HomeDetailsViewModel;
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <h2>@ViewBag.PageTitle</h2>
+    <h2>@Model.PageTitle</h2>
 
     @{
         
@@ -14,8 +14,8 @@
 
     <div>
         <ul>
-            <li>Name: @Model.Name</li>
-            <li>Email: @Model.Email</li>
+            <li>Name: @Model.Employee.Name</li>
+            <li>Email: @Model.Employee.Email</li>
         </ul>
     </div>
 

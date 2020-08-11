@@ -26,10 +26,6 @@ namespace EmployeeManagement.Controllers
 
             ViewBag.PageTitle = "Details of Employee";
 
-            ViewBag.Employee = model;
-
-            ViewBag.EmployeeName = model.Name;
-
             return View(model);
         }
     }

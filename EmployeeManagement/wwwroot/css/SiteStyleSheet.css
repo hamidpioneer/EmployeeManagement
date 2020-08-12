@@ -1,0 +1,15 @@
+﻿body {
+    font-size: 16px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.card-body img{
+    margin-bottom: 2rem;
+}
+
+a.btn{
+    min-width: 120px;
+}

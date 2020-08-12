@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "twitter-bootstrap@4.5.2",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "js/bootstrap.min.js",
+        "css/bootstrap-grid.min.css",
+        "css/bootstrap-reboot.min.css",
+        "css/bootstrap.min.css"
+      ]
+    }
+  ]
+}

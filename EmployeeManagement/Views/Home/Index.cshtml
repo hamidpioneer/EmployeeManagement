@@ -3,25 +3,20 @@
 @{
     ViewBag.PageTitle = "Employees List";
 }
-        
-<div>
-    <table>
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Department</td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var employee in Model)
-            {
-            <tr>
-                <td>@employee.Id</td>
-                <td>@employee.Name</td>
-                <td>@employee.Department</td>
-            </tr>                      
-            }
-        </tbody>
-    </table>
+
+<div class="card-deck">
+
+    @foreach (var employee in Model)
+    {
+        <div class="card" id="@employee.Id">
+            <img src="~/images/noimage.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@employee.Name</h5>
+                <p class="card-text">@employee.Department</p>
+                <p class="card-text"><small class="text-muted">@employee.Email</small></p>
+            </div>
+        </div>
+    }
+
+
 </div>

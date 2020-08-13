@@ -1,5 +1,5 @@
 ﻿@model Employee;
-
+@inject IEmployeeRepository _empRepo;
 
     
 
@@ -27,6 +27,10 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="text-right">
                 <button type="submit" class="btn btn-info ">Create</button>
+            </div>
+
+            <div>
+                <h4>Total Count: @_empRepo.GetAllEmployees().Count()</h4>
             </div>
 
         </form>

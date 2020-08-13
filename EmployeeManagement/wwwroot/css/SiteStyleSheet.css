@@ -22,6 +22,7 @@ img {
 
 a.btn{
     min-width: 120px;
+    margin: 0.25rem;
 }
 
 .siteForm{

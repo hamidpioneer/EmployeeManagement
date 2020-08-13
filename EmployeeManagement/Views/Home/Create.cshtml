@@ -19,7 +19,10 @@
             </div>
             <div class="form-group row">
                 <label asp-for="Department" class="col-4"></label>
-                <select asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()" class="form-control col-8"></select>
+                <select asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()" class="form-control col-8">
+                    <option value="">Select your department...</option>
+                </select>
+                <span asp-validation-for="Department"></span>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="text-right">

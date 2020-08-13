@@ -12,7 +12,7 @@ namespace EmployeeManagement.Models
         public int Id { get; set; }
         
         [Required]
-        [MaxLength(50,ErrorMessage = "Must not exceed 50 characters!")]
+        [MaxLength(50,ErrorMessage = "Name can nto exceed 50 characters!")]
         public string Name { get; set; }
         
         [Required]
@@ -21,6 +21,7 @@ namespace EmployeeManagement.Models
         [Display(Name = "Office Email")]
         public string Email { get; set; }
 
-        public Dept Department { get; set; }
+        [Required]
+        public Dept? Department { get; set; }
     }
 }

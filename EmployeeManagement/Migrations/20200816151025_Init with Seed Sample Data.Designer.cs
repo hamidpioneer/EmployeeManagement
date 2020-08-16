@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagement.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200816142023_InitilMigration")]
-    partial class InitilMigration
+    [Migration("20200816151025_Init with Seed Sample Data")]
+    partial class InitwithSeedSampleData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,29 @@ namespace EmployeeManagement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Department = 2,
+                            Email = "aa@mail.com",
+                            Name = "Aa"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Department = 1,
+                            Email = "bb@mail.com",
+                            Name = "Bb"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Department = 3,
+                            Email = "cc@mail.com",
+                            Name = "Cc"
+                        });
                 });
 #pragma warning restore 612, 618
         }

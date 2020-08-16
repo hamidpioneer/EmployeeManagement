@@ -1,7 +1,9 @@
 ﻿using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -62,15 +64,20 @@ namespace EmployeeManagement.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
-                if (model.Photo != null && 
-                    (model.Photo.ContentType == "image/jpeg"
-                    || model.Photo.ContentType == "image/png"
-                    || model.Photo.ContentType == "image/gif") )
+                if (model.Photos != null && model.Photos.Count > 0)
                 {
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
-                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    foreach (IFormFile photo in model.Photos)
+                    {
+                        if(photo.ContentType == "image/jpeg"
+                            || photo.ContentType == "image/png"
+                            || photo.ContentType == "image/gif")
+                        {
+                            uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                            photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                        }
+                    }
                 }
                 
                 

@@ -24,10 +24,10 @@
             <span asp-validation-for="Department"></span>
         </div>
         <div class="form-group row">
-            <label asp-for="Photo" class="col-4"></label>
+            <label asp-for="Photos" class="col-4"></label>
             <div class="custom-file col-8">
-                <input asp-for="Photo" class="form-control custom-file-input" />
-                <label asp-for="Photo" class="custom-file-label"></label>
+                <input asp-for="Photos" class="form-control custom-file-input" />   @* multiple="multiple" for uploading more than 1 files *@
+                <label asp-for="Photos" class="custom-file-label"></label>
             </div>
         </div>
 
@@ -52,8 +52,13 @@
     <script>
         $(document).ready(function () {
             $('.custom-file-input').on('change', function () {
-                var fileName = $(this).val().split('\\').pop();
-                $(this).next('.custom-file-label').html(fileName);
+                var fileLabel = $(this).next('.custom-file-label');
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    fileLabel.html(files.length + ' files selected');
+                } else if (files.length == 1) {
+                    fileLabel.html(files[0].name);
+                }
             });
         });
 

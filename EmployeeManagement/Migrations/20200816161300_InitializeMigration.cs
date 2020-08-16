@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement.Migrations
 {
-    public partial class InitwithSeedSampleData : Migration
+    public partial class InitializeMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,21 +20,6 @@ namespace EmployeeManagement.Migrations
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Employees",
-                columns: new[] { "Id", "Department", "Email", "Name" },
-                values: new object[] { 1, 2, "aa@mail.com", "Aa" });
-
-            migrationBuilder.InsertData(
-                table: "Employees",
-                columns: new[] { "Id", "Department", "Email", "Name" },
-                values: new object[] { 2, 1, "bb@mail.com", "Bb" });
-
-            migrationBuilder.InsertData(
-                table: "Employees",
-                columns: new[] { "Id", "Department", "Email", "Name" },
-                values: new object[] { 3, 3, "cc@mail.com", "Cc" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

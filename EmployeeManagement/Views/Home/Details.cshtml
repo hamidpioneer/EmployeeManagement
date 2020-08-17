@@ -2,7 +2,7 @@
 
 @{
     ViewBag.PageTitle = "Employee's Details";
-    var photoPath = "~/Images/" + (Model.Employee.PhotoPath ?? "noimage.jpg");
+    var photoPath = "~/Images/" + (Model.Employee.PhotoPath ?? "noimage.png");
 }
 
 
@@ -25,7 +25,7 @@
             <div  class="card-footer text-center">
                 
                 <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back</a>
-                <a href="#" class="btn btn-primary">Edit</a>
+                <a asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Employee.Id" class="btn btn-primary">Edit</a>
                 <a href="#" class="btn btn-primary">Delete</a>
             </div>
         </div>

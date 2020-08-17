@@ -58,29 +58,59 @@ namespace EmployeeManagement.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            Employee employee = _employeeRepository.GetEmployee(id);
+
+            HomeEditViewModel homeEditViewModel = new HomeEditViewModel
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Email = employee.Email,
+                Department = employee.Department,
+                ExistingPhotoPath = employee.PhotoPath
+            };
+            return View(homeEditViewModel);
+        }
+
         [HttpPost]
         public IActionResult Create(HomeCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
-                if (model.Photos != null && model.Photos.Count > 0)
+                #region Multiple Photo Uploads
+                //if (model.Photos != null && model.Photos.Count > 0)
+                //{
+                //    foreach (IFormFile photo in model.Photos)
+                //    {
+                //        if(photo.ContentType == "image/jpeg"
+                //            || photo.ContentType == "image/png"
+                //            || photo.ContentType == "image/gif")
+                //        {
+                //            uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                //            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                //            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                //            photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                //        }
+                //    }
+                //}
+                #endregion
+
+                if (model.Photo != null)
                 {
-                    foreach (IFormFile photo in model.Photos)
+                    if (model.Photo.ContentType == "image/jpeg"
+                            || model.Photo.ContentType == "image/png"
+                            || model.Photo.ContentType == "image/gif")
                     {
-                        if(photo.ContentType == "image/jpeg"
-                            || photo.ContentType == "image/png"
-                            || photo.ContentType == "image/gif")
-                        {
-                            uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
-                            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                            photo.CopyTo(new FileStream(filePath, FileMode.Create));
-                        }
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
                     }
                 }
-                
-                
+                                
                 Employee newEmployee = new Employee
                 {
                     Name = model.Name,

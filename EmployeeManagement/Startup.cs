@@ -41,30 +41,39 @@ namespace EmployeeManagement
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            }
 
             app.UseRouting();
 
             app.UseStaticFiles();
 
             //app.UseMvcWithDefaultRoute();
-            app.UseMvc();
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("defaults", "{controller=Home}/{action=Index}/{id?}");
-            //});
 
-            app.Run(async (context) =>
+            //app.UseMvc();
+
+            app.UseMvc(routes =>
             {
-                await context.Response.WriteAsync("Hello World from RUN Middlewar");
+                routes.MapRoute("defaults", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //app.UseEndpoints(endpoints =>
+           
+            app.UseEndpoints(endpoints =>
+            {
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync("Hello World!\n");
+                //});
+            });
+
+
+            //app.Run(async (context) =>
             //{
-            //    endpoints.MapGet("/", async context =>
-            //    {
-            //        await context.Response.WriteAsync("Hello World!\n");
-            //    });
+            //    await context.Response.WriteAsync("Hello World from RUN Middlewar");
             //});
+
         }
     }
 }

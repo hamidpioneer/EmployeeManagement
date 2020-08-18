@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,15 @@ namespace EmployeeManagement.Controllers
         [Route("Error/{statusCode}")]
         public IActionResult HttpStatusCodeHandler(int statusCode)
         {
+            var statusCodeResult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+
             switch (statusCode)
             {
                 case 404:
                     ViewBag.ErrorMessage = "Sorry, the resource you requested could not found (Status Code = 404)";
+                    ViewBag.Path = statusCodeResult.OriginalPath;
+                    ViewBag.ToString = statusCodeResult.ToString();
+                    ViewBag.QueryStr = statusCodeResult.OriginalQueryString;
                     break;
             }
 

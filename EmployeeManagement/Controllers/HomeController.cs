@@ -50,6 +50,10 @@ namespace EmployeeManagement.Controllers
         [Route("{id?}")]
         public ViewResult Details(int? id)
         {
+
+            throw new Exception("Error in Details Page");
+
+
             Employee employee = _employeeRepository.GetEmployee(id.Value);
 
             if(employee == null)

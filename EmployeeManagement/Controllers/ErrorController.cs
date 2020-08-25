@@ -54,6 +54,7 @@ namespace EmployeeManagement.Controllers
             logger.LogWarning($"This is an exception on path = {exceptionHandlerPathFeature.Path} &" +
                               $" Error = {exceptionHandlerPathFeature.Error}");
 
+
             return View("Error");
         }
     }

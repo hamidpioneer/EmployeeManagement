@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,14 +22,17 @@ namespace EmployeeManagement.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ILogger logger;
 
         public HomeController(
             IEmployeeRepository employeeRepository,
-            IWebHostEnvironment webHostEnvironment
+            IWebHostEnvironment webHostEnvironment,
+            ILogger<HomeController> logger
             )
         {
             _employeeRepository = employeeRepository;
             this.webHostEnvironment = webHostEnvironment;
+            this.logger = logger;
         }
 
         //[Route("Home")]
@@ -51,8 +55,13 @@ namespace EmployeeManagement.Controllers
         public ViewResult Details(int? id)
         {
 
-            throw new Exception("Error in Details Page");
-
+            //throw new Exception("Error in Details Page");
+            logger.LogInformation("{{LogInformation}}");
+            logger.LogWarning("{{LogWarning}}");
+            logger.LogCritical("{{LogCritical}}");
+            logger.LogDebug("{{LogDebug}}");
+            logger.LogError("{{LogError}}");
+            logger.LogTrace("{{LogTrace}}");
 
             Employee employee = _employeeRepository.GetEmployee(id.Value);
 

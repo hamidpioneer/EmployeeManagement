@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using EmployeeManagement.Controllers;
+using Microsoft.AspNetCore.Identity;
 
 namespace EmployeeManagement
 {
@@ -31,6 +32,9 @@ namespace EmployeeManagement
             {
                 options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection"));
             });
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false).AddXmlSerializerFormatters();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
@@ -57,6 +61,8 @@ namespace EmployeeManagement
             //app.UseMvcWithDefaultRoute();
 
             //app.UseMvc();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

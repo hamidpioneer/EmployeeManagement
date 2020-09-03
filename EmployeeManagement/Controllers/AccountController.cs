@@ -21,14 +21,28 @@ namespace EmployeeManagement.Controllers
 
 
 
-        //[HttpGet]
-        //public async Task<IActionResult> Login()
-        //{
-        //    await signInManager.SignOutAsync();
-        //    return RedirectToAction("Index", "Home");
-        //}
-        
-        
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            }
+            return View(model);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -58,7 +72,7 @@ namespace EmployeeManagement.Controllers
                 }
                 foreach(var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
             return View(model);

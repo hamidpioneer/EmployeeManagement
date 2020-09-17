@@ -1,23 +1,18 @@
 ﻿using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace EmployeeManagement.Controllers
 {
 
     //[Route("Home")]
     [Route("[controller]/[action]")]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -35,10 +30,13 @@ namespace EmployeeManagement.Controllers
             this.logger = logger;
         }
 
+
+
         //[Route("Home")]
         [Route("")]
         [Route("/")]
         [Route("~/Home")]
+        [AllowAnonymous]
         public ViewResult Index()
         {
             return View(_employeeRepository.GetAllEmployees());
@@ -52,6 +50,7 @@ namespace EmployeeManagement.Controllers
 
 
         [Route("{id?}")]
+        [AllowAnonymous]
         public ViewResult Details(int? id)
         {
 

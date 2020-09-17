@@ -14,8 +14,9 @@ namespace EmployeeManagement.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
 
-        public AccountController(  UserManager<IdentityUser> userManager, 
-                            SignInManager<IdentityUser> signInManager) {
+        public AccountController(UserManager<IdentityUser> userManager,
+                            SignInManager<IdentityUser> signInManager)
+        {
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -31,14 +32,21 @@ namespace EmployeeManagement.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return LocalRedirect(ReturnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
@@ -52,16 +60,16 @@ namespace EmployeeManagement.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        
-        
-        
+
+
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
-        
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -75,7 +83,7 @@ namespace EmployeeManagement.Controllers
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
